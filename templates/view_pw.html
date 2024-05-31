@@ -1,0 +1,111 @@
+{% extends "base.html"%}
+{% block title %}SIGN UP FOR A PROJECT WEDNESDAY{% endblock %}
+{% set active_page = 'events' %}
+{% block content %}
+<div class="container rounded bg-white mt-5 mb-5">
+    <!-- Display project details -->
+    <div class="row mt-2">
+        <div class="col"></div>
+        <div class="col-md-4" style="justify-content:center;">
+            <label class="labels">Project Title</label>
+            <input type="text" name="name" class="form-control" placeholder="Project Title" value="{{ event.name }}" readonly>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col"></div>
+        <div class="col-md-8" style="align-items:center">
+            <label class="labels">Project Description</label>
+            <textarea name="project_description" class="form-control" rows='6' cols='100' maxlength='500' placeholder="Description (1500 character limit)" readonly>{{ event.description }}</textarea>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row mt-1">
+        <div class="col"></div>
+        <div class="col-md-4" style="justify-content:center;">
+            <label class="labels">Student Limit</label>
+            <input type="number" name="student_limit" class="form-control" placeholder="0" value="{{ event.student_limit }}" readonly>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col"></div>
+        <div class="col-md-4" style="justify-content:center;">
+            <label class="labels">Teachers</label>
+            <input type="text" name="teachers" class="form-control" placeholder="Teachers" value="{{ event.teachers }}" readonly>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col"></div>
+        <div class="col-md-4" style="justify-content:center;">
+            <label class="labels">Student Assistant</label>
+            <input type="text" name="student_assistant" class="form-control" placeholder="Student Assistant" value="{{ event.student_assistant }}" readonly>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col"></div>
+        <div class="col-md-4" style="justify-content:center;">
+            <label class="labels">Special Notes</label>
+            <input type="text" name="special_note" class="form-control" placeholder="Special Notes" value="{{ event.special_note }}" readonly>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col"></div>
+        <div class="col-3" style="align-items:center;">
+            <label for="cycle">Cycle:</label>
+            <select id="cycle_add" name="cycle" disabled>
+                <option value="1" {% if event.cycle_number == 1 %}selected{% endif %}>1</option>
+                <option value="2" {% if event.cycle_number == 2 %}selected{% endif %}>2</option>
+            </select>
+        </div>
+        <div class="col"></div>
+    </div>
+
+    <!-- Sign Up Button -->
+    {%if user != ''%}
+        {%if user.joined_events["Project Wednesday"] != ''%}
+            <form method="POST">
+                <div class="mt-2 text-center">
+                    <button type="submit" class="btn btn-secondary-emphasis profile-button" name="join_button_spectator" disabled>Sign Up</button>
+                </div>
+            </form>
+            {%if user.joined_events["Project Wednesday"] == event.name%}
+            <form method="POST">
+                <div class="mt-2 text-center">
+                    <button type="submit" class="btn btn-danger profile-button" name="leave_event">Leave Event</button>
+                </div>
+            </form>
+            {%endif%}
+        {%else%}
+        <form method="POST">
+            <div class="mt-5 text-center">
+                <button type="submit" class="btn btn-primary profile-button" name="join_button">Sign Up</button>
+            </div>
+        </form>
+        {%endif%}
+    {%else%}
+    <form method="POST">
+        <div class="mt-2 text-center">
+            <button type="submit" class="btn btn-secondary-emphasis profile-button" name="join_button" disabled>Sign Up</button>
+        </div>
+    </form>
+    {%endif%}
+
+
+
+
+    
+</div>
+{% endblock %}
+
+{%block main_css%} <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet"> {%endblock%}
+

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}{{ user.first_name }}'s Profile{% endblock %}
+{% set active_page = 'profile' %}
+{% block content %}
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <!-- Left side for signed-up events -->
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Joined Events</h4>
+                </div>
+                <div class="col-md-12">
+                    <h3>Project Wednesday</h3>
+                    {% if event %}
+                        <h4><a href="{{ url_for('display_pw', event_id=event.id) }}">{{ user.joined_events.get("Project Wednesday") }}</a></h4>
+                    {% else %}
+                        <p>No joined events</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
+                    <h3>Tournaments (Spectating)</h3>
+                    {% if tournaments_s %}
+                        {% for tournament_s in tournaments_s %}
+                            <h4><a href="{{ url_for('display_tournaments', event_id=tournament_s.id) }}">{{ tournament_s.name }}</a></h4>
+                        {% endfor %}
+                    {% else %}
+                        <p>No spectating tournaments</p>
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
+                    <h3>Tournaments (Competing)</h3>
+                    {% if tournaments_c %}
+                        {% for tournament_c in tournaments_c %}
+                            <h4><a href="{{ url_for('display_tournaments', event_id=tournament_c.id) }}">{{ tournament_c.name }}</a></h4>
+                        {% endfor %}
+                    {% else %}
+                        <p>No competing tournaments</p>
+                    {% endif %}
+                    <div class="col-md-12">
+                        <h3>Performances</h3>
+                        {% if performances%}
+                            {% for performance in performances %}
+                                <h4><a href="{{ url_for('display_performances', event_id=performance.id) }}">{{ performance.name }}</a></h4>
+                            {% endfor %}
+                        {% else %}
+                            <p>No competing tournaments</p>
+                        {% endif %}
+                    </div>
+                </div>
+               
+            
+                
+
+            </div>
+        </div>
+    </div>
+        
+        <!-- Right side for read-only profile information -->
+        <div class="col-md-7">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Information</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label class="labels">First Name</label>
+                        <input type="text" class="form-control" value="{{ user.first_name }}" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Last Name</label>
+                        <input type="text" class="form-control" value="{{ user.last_name }}" readonly>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <label class="labels">Email</label>
+                        <input type="text" class="form-control" value="{{ user.email }}" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block main_css %}
+<link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+{% endblock %}

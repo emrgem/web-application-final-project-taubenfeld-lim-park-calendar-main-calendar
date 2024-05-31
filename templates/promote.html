@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Promote Users{% endblock %}
+{% set active_page = 'promote' %}
+
+{% block content %}
+<div class="container rounded bg-white mt-5 mb-5">
+    <h4 class="text-center">Promote Users</h4>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Current Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.account_type }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('promote') }}">
+                                <select name="new_role" class="form-control mb-1">
+                                    <option value="Teacher" {% if user.account_type == 'Teacher' %} selected {% endif %}>Teacher</option>
+                                    <option value="Admin" {% if user.account_type == 'Admin' %} selected {% endif %}>Admin</option>
+                                    <option value="SuperAdmin" {% if user.account_type == 'SuperAdmin' %} selected {% endif %}>SuperAdmin</option>
+                                </select>
+
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                                <button type="submit" class="btn btn-primary">Promote</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block main_css %}
+<link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+{% endblock %}

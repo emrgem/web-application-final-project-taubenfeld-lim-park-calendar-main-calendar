@@ -1,0 +1,187 @@
+{%extends "base.html"%}
+{%block title%} EDIT CREATED EVENTS {%endblock%}
+{%set active_page='events'%}
+{%block content%} 
+<style>
+       
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes paddingChange {
+    0% {padding-top: 240px;}
+    100% {padding-top: 125px;}
+  }
+
+  @keyframes imageCompress {
+    0% {height: 85%;}
+    100% {height: 45%;}
+  }
+
+  .card {
+    width: 570px; /* Adjust width as needed */
+    height: 300px; /* Adjust height as needed */
+    background-color: #ffffff; /* Card background color */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Zoom effect */
+  }
+  
+  .card:hover .card-content {
+    padding-top: 125px;
+  }
+
+  .card:hover .event-img {
+    height: 45%;
+  }
+
+  .card.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* CSS for card content */
+  .card-content {
+    padding-top: 125px; /* Adjust padding as needed */
+    transition: padding-top 0.5s ease-in-out;
+    padding-left: 10px;
+    padding-right: 20px;
+  }
+
+      
+.event-title {
+  font-family: "Poppins";
+  font-size: 30px;
+  text-decoration: underline;
+  color: #000000;
+  margin-bottom: 15px;
+}
+
+.event-desc {
+      max-height: 100px;
+      transition: max-height 0.5s ease;
+}
+
+
+.event-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45%;
+  transition: height 0.5s ease-in-out;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+  
+  /* Example CSS for card title */
+  .card-title {
+    font-size: 18px; /* Adjust font size as needed */
+    font-weight: bold;
+    margin-bottom: 10px; /* Adjust margin as needed */
+    margin-left: 5px;
+  }
+  
+  /* Example CSS for card description */
+  .card-description {
+    font-size: 14px; /* Adjust font size as needed */
+  }
+  
+  /* CSS for container to control card animations */
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  /* CSS to apply fade-in animation to cards */
+  .card-fade-in {
+    animation: fade-in 0.8s ease forwards;
+  }
+
+  .content-right {
+   float: right;
+ }
+
+ .icon-image {
+  max-height: 2em; /* Adjust the value to match the font size or desired height */
+  height: auto;
+  width: auto; /* This maintains the aspect ratio */
+  margin-left: 10px; /* Adjust spacing if needed */
+}
+</style>
+
+
+<div class="container-fluid" style="margin-top: 80px; justify-content:center">
+    <div class="event-cards">
+      {%for event in events%}
+        {%if loop.index0 % 2 == 0%}
+        <div class="row row-events">
+        {%endif%}
+          <div class="col"></div>
+          <div class="col">
+              <div class="card card-event card-fade-in">
+                  {%if event.image_b64 == ''%}
+                  <div class="card-img-top event-img" style="background-image: url('static/assets/img/bt logo.png');  background-size: cover; background-position: center;"></div>
+                  {%else%}
+                  <div class="card-img-top event-img"  style="background-image: url('data:image/png;base64,{{ event.image_b64 }}');  background-size: cover; background-position: center;"></div>
+                  {%endif%}
+                  <!-- src="data:image/png;base64,{{user_image}}" -->
+                  <!-- <img class='event-img img-fluid' src="static/assets/img/bt logo.png" alt="IMG">  -->
+                  <div class="card-content">
+                    {%for performance in performances%}
+                    {%if event.id == performance.id%}
+                    <h1 class="event-title"><a href="{{url_for('edit_performance', event_id = event.id)}}">{{event.name}}</a> <span class="content-right" style="font-size:15px"> <a href="{{url_for('edit_performance', event_id = event.id)}}"> <img src='static/assets/img/edit_icon.png' class='icon-image'> </a> <a href="{{url_for('remove_event', event_id = event.id)}}"> <img src='static/assets/img/remove_icon.png' class='icon-image'> </a> </span></h1>
+                    {%endif%}
+                    {%endfor%}
+                    {%for tournament in tournaments%}
+                    {%if event.id == tournament.id%}
+                    <h1 class="event-title"><a href="{{url_for('edit_tournament', event_id = event.id)}}">{{event.name}}</a> <span class="content-right" style="font-size:15px"> <a href="{{url_for('edit_tournament', event_id = event.id)}}"> <img src='static/assets/img/edit_icon.png' class='icon-image'> </a> <a href="{{url_for('remove_event', event_id = event.id)}}"> <img src='static/assets/img/remove_icon.png' class='icon-image'>  </a> </span></h1>
+                    {%endif%}
+                    {%endfor%}
+                    {%for pwed in pweds%}
+                    {%if event.id == pwed.id%}
+                    <h1 class="event-title"><a href="{{url_for('edit_project_wednesday', event_id = event.id)}}">{{event.name}}</a> <span class="content-right" style="font-size:15px"> <a href="{{url_for('edit_project_wednesday', event_id = event.id)}}"> <img src='static/assets/img/edit_icon.png' class='icon-image'> </a> <a href="{{url_for('remove_event', event_id = event.id)}}"> <img src='static/assets/img/remove_icon.png' class='icon-image'>  </a> </span></h1>
+                    {%endif%}
+                    {%endfor%}
+                     <p class="event-desc"> 
+                         {{event.description}}
+                      </p>
+                 </div>
+              </div>
+          </div>
+          {% if loop.index % 2 == 0 or loop.last %}
+            <div class="col"></div>
+          </div>
+          {%endif%}
+          {% if loop.index % 1 == 0 and loop.last %}
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+          </div>
+          {%endif%}
+      {%endfor%}
+    </div>
+</div>
+
+<script src="static/assets/js/event.js"></script>
+{%endblock%}
+{%block main_css%} <link href="static/assets/css/style.css" rel="stylesheet"> {%endblock%}

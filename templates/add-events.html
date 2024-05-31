@@ -1,0 +1,44 @@
+{% extends "base.html"%}
+{%block title%}ADD EVENTS{%endblock%}
+{%set active_page = 'events'%}
+{%block content%}
+<div class="container rounded bg-white mt-5 mb-5">
+
+        <div class="border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Form Title</h4>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data" action='/events'>
+                    <div class="row mt-2">
+                        <div class="col"></div>
+                        <div class="col-md-4" style="justify-content:center;"><label class="labels">Event Title</label> <input type="text" name="event_title" class="form-control" placeholder="My Fabulous Event!" value=""> </div>
+                        <div class="col"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col"></div>
+                        <div class="col-md-8" style="align-items:center"><label class="labels">Event Description</label><textarea name="event_description" class="form-control" value="" rows='6' cols='100' maxlength='500' placeholder="Description (1500 character limit)"> </textarea> </div>
+                        <div class="col"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col"></div>
+                        <div class="col-md-3"> <input type="file" class="form-control update-button" name="event_pic" accept=".jpg, .png" aria-describedby="basic-addon1" required> </div>
+                        <div class="col"></div>
+                    </div>
+
+                    
+
+
+                <span></span>
+                <div class="mt-5 text-center"><button type="submit" class="btn btn-primary profile-button" name='event_submit'>Add Event</button></div>
+                </form>
+
+            </div>
+        </div>
+        
+
+</div>
+{%endblock%}
+
+{%block main_css%} <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet"> {%endblock%}

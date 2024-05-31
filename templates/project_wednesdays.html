@@ -1,0 +1,320 @@
+{%extends "base.html"%}
+{%block title%} PROJECT WEDNESDAYS{%endblock%}
+{%set active_page='events'%}
+{%block content%} 
+<style>
+    .card {
+        width: 500px; /* Adjust width as needed */
+        height: 200px; /* Adjust height as needed */
+        background-color: #ffffff; /* Card background color */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      
+      .card:hover {
+        background-color: #f0f0f0; /* Hover background color */
+        transform: scale(1.05); /* Zoom effect */
+      }
+      
+      .card.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* CSS for card content */
+      .card-content {
+        padding-top: 0px; /* Adjust padding as needed */
+      }
+
+          
+    .event-title {
+      font-family: "Poppins";
+      font-size: 20px;
+      text-decoration: underline;
+    }
+
+    .event-desc {
+      max-height: 95px;
+      transition: max-height 0.5s ease;
+    }
+
+    .scroll {
+      overflow-y: scroll;
+    }
+
+    .event-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+      
+      /* Example CSS for card title */
+      .card-title {
+        font-size: 18px; /* Adjust font size as needed */
+        font-weight: bold;
+        margin-bottom: 10px; /* Adjust margin as needed */
+      }
+      
+      /* Example CSS for card description */
+      .card-description {
+        font-size: 14px; /* Adjust font size as needed */
+      }
+      
+      /* CSS for container to control card animations */
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      
+      /* CSS to apply fade-in animation to cards */
+      .card-fade-in {
+        animation: fade-in 0.8s ease forwards;
+      }
+      
+      
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* SAME AS CARD */
+      @keyframes paddingChange {
+        0% {padding-top: 250px;}
+        100% {padding-top: 125px;}
+      }
+
+      @keyframes imageCompress {
+        0% {height: 80%;}
+        100% {height: 40%;}
+      }
+
+      .cardx {
+        width: 610px; /* Adjust width as needed */
+        height: 300px; /* Adjust height as needed */
+        background-color: #ffffff; /* Card background color */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      
+      .cardx:hover {
+        transform: scale(1.05); /* Zoom effect */
+      }
+      
+      .cardx:hover .cardx-content {
+        padding-top: 125px;
+      }
+
+      .cardx:hover .eventx-img {
+        height: 40%;
+      }
+
+      .cardx.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* CSS for card content */
+      .cardx-content {
+        padding-top: 160px; /* Adjust padding as needed */
+        transition: padding-top 0.5s ease-in-out;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+          
+    .eventx-title {
+      font-family: "Poppins";
+      font-size: 30px;
+      text-decoration: underline;
+      color: #000000;
+      margin-bottom: 15px;
+    }
+
+    .eventx-desc {
+      max-height: 0;
+
+      /*hey :  nothing to add here yet..*/
+    }
+
+    .eventx-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      transition: height 0.5s ease-in-out;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center center;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+      
+      /* Example CSS for card title */
+      .cardx-title {
+        font-size: 18px; /* Adjust font size as needed */
+        font-weight: bold;
+        margin-bottom: 10px; /* Adjust margin as needed */
+        margin-left: 5px;
+      }
+      
+      /* Example CSS for card description */
+      .cardx-description {
+        font-size: 14px; /* Adjust font size as needed */
+      }
+      
+      /* CSS for container to control card animations */
+      .cardx-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      
+      /* CSS to apply fade-in animation to cards */
+      .cardx-fade-in {
+        animation: fade-in 0.8s ease forwards;
+      }
+
+      .header-text {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .cycle-num {
+        float: right;
+      }
+    </style>
+
+<h1 class="header-text"> Project Wednesdays </h1>      
+<div class="container" style="margin-top: 80px; justify-content:center">
+    <div class="event-cards">
+    
+      {%for event in events%}
+      {%if loop.index0 % 2 == 0%}
+      <div class="row row-events">
+      {%endif%}
+        <div class="col"></div>
+        <div class="col">
+            <div class="card card-event card-fade-in">
+                {%if event.image == none or event.image == ''%}
+                <div class="card-img-top event-img" style="background-image: url('static/assets/img/bt logo.png');  background-size: cover; background-position: center;"></div>
+                {%else%}
+                <div class="card-img-top event-img" style="background-image: url('{{event.image}}');  background-size: cover; background-position: center;"></div>
+                {%endif%}
+                <!-- <img class='event-img img-fluid' src="static/assets/img/bt logo.png" alt="IMG">  -->
+                <div class="card-content">
+                    <h1 class="event-title"><a href="{{url_for('display_pw', event_id = event.id)}}">{{event.name}}</a> <span class="cycle-num" style="font-size:15px"> Cycle: {{event.cycle_number}}</span></h1>
+                    <p> Description: </p>
+                    {%if event.description|length > 245%}
+                    <p class="event-desc scroll"> 
+                    {%else%}
+                    <p class="event-desc"> 
+                    {%endif%}
+                       {{event.description}}
+                    </p>
+               </div>
+            </div>
+        </div>
+        {% if loop.index % 2 == 0 or loop.last %}
+          <div class="col"></div>
+        </div>
+        {%endif%}
+        {% if loop.index % 1 == 0 and loop.last %}
+          <div class="col"></div>
+        </div>
+        {%endif%}
+    {%endfor%}
+
+<!-- 
+    <div class="row row-events">
+      {%for event in events%}
+
+      
+      <div class="col-6">
+        <a href="{{url_for('display_pw', event_id = event.id)}}">
+          <div class="card card-event card-fade-in">
+              <div class="card-img-top event-img" style="background-image: url('static/assets/img/bt logo.png'); height: 40%; background-size: cover; background-position: center;"></div>
+             
+              <div class="card-content">
+                  <h1 class="event-title" style='color:black'>{{event.name}} </h1>
+                  <p class="event-desc" style='color:black'> 
+                      {{event.description}}
+                  </p>
+          </div>
+          </div>
+        </a>
+      </div>
+    
+    
+      {%endfor%}
+      </div>
+
+
+<!--          {%for event in events%}
+            {%if loop.index0 % 2 == 0%}
+            <div class="row row-events">
+            {%endif%}
+              <div class="col"></div>
+              <div class="col">
+                  <div class="card card-event card-fade-in">
+                      {%if event.image_b64 == ''%}
+                      <div class="card-img-top event-img" style="background-image: url('static/assets/img/bt logo.png');  background-size: cover; background-position: center;"></div>
+                      {%else%}
+                      <div class="card-img-top event-img"  style="background-image: url('data:image/png;base64,{{ event.image_b64 }}');  background-size: cover; background-position: center;"></div>
+                      {%endif%}
+                     
+                      <div class="card-content">
+                          <h1 class="event-title"><a href="{{url_for('display_pw', event_id = event.id)}}"> {{event.name}}</a></h1>
+                          <p class="event-desc"> 
+                             {{event.description}}
+                          </p>
+                     </div>
+                  </div>
+              </div>
+              {% if loop.index % 2 == 0 or loop.last %}
+                <div class="col"></div>
+              </div>
+              {%endif%}
+              {% if loop.index % 1 == 0 and loop.last %}
+                <div class="col"></div>
+                <div class="col"></div>
+              </div>
+              {%endif%}
+          {%endfor%}
+-->
+
+
+</div>
+</div>
+
+<script src="static/assets/js/event.js"></script>
+{%endblock%}
+
+{%block main_css%} <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet"> {%endblock%}

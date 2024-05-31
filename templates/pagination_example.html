@@ -1,0 +1,59 @@
+{%extends "base.html"%}
+{%block title%}Inventory{%endblock%}
+{%set active_page = 'inventory'%}
+{%block content%}
+
+    <div class="container mt-5">
+      <div>
+        <form action='/inventory' method = "POST">
+          <label for='perpage'>Entries Per Page:</label>
+          <select id='perpage' name='perpage' onchange='this.form.submit()'>
+              <option value={{active}}>{{active}}</option> 
+              <option value='5'>5</option>
+              <option value='10'>10</option>
+              <option value='20'>20</option>
+              <option value='50'>50</option>
+          </select>
+        </form>
+        </div>
+      <div class="row align-items-start">
+        <div class="col-lg"> 
+          <div class="hero-content-wrapper">
+            <!-- ========================= Let's Create a table here========================= -->
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Book Title</th>
+                  <th scope="col">Format</th>
+                  <th scope="col">Publish Date</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%for book in books%}
+                <tr>
+                  <th scope="row">{{book.id}}</th>
+                  <td>{{book.title}}</td>
+                  <td>{{book.author}}</td>
+                  <td>{{book.format}}</td>
+                  <td>{{book.author}}</td>
+                  <td>{{book.price}}</td>
+                  <td>{{book.qty}}</td>
+                </tr>
+                {%endfor%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class='pagination'>
+        {{pagination.links}}
+      </div>
+    </div>
+
+  
+{%endblock%}

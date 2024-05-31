@@ -1,0 +1,65 @@
+{% extends "base.html"%}
+{%block title%}ADD PERFORMANCE{%endblock%}
+{%set active_page = 'events'%}
+{%block content%}
+<div class="container rounded bg-white mt-5 mb-5">
+
+        <div class="border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right"> Register an Upcoming Performance/Concert! </h4>
+                </div>
+                <!-- GENERAL INFO -->
+                <form method="POST" enctype="multipart/form-data" action='/events'>
+                    <div class="row mt-2">
+                        <div class="col"></div>
+                        <div class="col-md-4" style="justify-content:center;"><label class="labels">Performance Title</label> <input type="text" name="event_title" class="form-control" placeholder="My Fabulous Event!" value=""> </div>
+                        <div class="col"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col"></div>
+                        <div class="col-md-8" style="align-items:center"><label class="labels">Description of Performance</label><textarea name="event_description" class="form-control" value="" rows='6' cols='100' maxlength='500' placeholder="Description (1500 character limit)"> </textarea> </div>
+                        <div class="col"></div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col"></div>
+                        <div class="col-md-3"> <label class="labels"> Image for Performance </label> <p style='font-size:12px'> *not required</p>  <input type="file" class="form-control update-button" name="event_pic" accept=".jpg, .png" aria-describedby="basic-addon1"> </div>
+                        <div class="col"></div>
+                    </div>
+                    
+                    <div class="row mt-1">
+                        <div class="col"></div>
+                        <div class="col-md-4" style="justify-content:center;"><label class="labels">Student Limit</label> <input type="number" name="student_limit" class="form-control" placeholder="0"> </div>
+                        <div class="col"></div>
+                    </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col"></div>
+                        <div class="col-md-4" style="align-items:center"><label class="labels">Performance Date/Time</label><input type="datetime-local" id="date_of_performance" name="date_of_performance"> </div>
+                        <div class="col"></div>
+                    </div>    
+
+                    <div class="row mt-3">
+                        <div class="col"></div>
+                        <div class="col-3" style="display: flex; align-items: center; white-space:nowrap;">
+                            <label class="labels" style="margin-right: 15px;">Cost for Audience</label>
+                            
+                            <span style="margin-right: 5px;">$</span>
+                            <input type="number" name="cost_audience" class="form-control" min="0.00" value="0.00" step=".01" oninput="this.value = parseFloat(this.value).toFixed(2);">
+                        </div>
+                        <div class="col"></div>
+                    </div>
+
+                <span></span>
+                <div class="mt-5 text-center"><button type="submit" class="btn btn-primary profile-button" name='performance_submit'>Add Event</button></div>
+                </form>
+
+            </div>
+        </div>
+        
+
+</div>
+{%endblock%}
+
+{%block main_css%} <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet"> {%endblock%}

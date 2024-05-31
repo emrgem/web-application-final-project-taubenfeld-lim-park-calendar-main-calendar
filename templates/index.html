@@ -1,0 +1,38 @@
+{%extends "base.html"%}
+{%block title %}INDEX {%endblock%}
+{%set active_page = 'index'%}
+{%block content%}
+<!-- <p>Test</p> -->
+<section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">BT Event Signups!</h1>
+          {% if current_user.is_authenticated %}
+            <h2 data-aos="fade-up" data-aos-delay="400">Hello, {{ current_user.first_name }}!</h2> <!-- Adjust 'name' based on your User model -->
+          {% else %}
+            <h2 data-aos="fade-up" data-aos-delay="400">Find out what events are going on in BT!</h2>
+          {% endif %}
+            <div data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center text-lg-start">
+              <a href="/events" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Events</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
+          <img src="static/assets/img/bt logo.png" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+    {{current_user}}
+
+  </section><!-- End Hero -->
+
+{%endblock%}
+
+{%block main_css%} <link href="static/assets/css/style.css" rel="stylesheet"> {%endblock%}

@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block title %}Admin - {{ user.first_name }}'s Profile{% endblock %}
+{% set active_page = 'admin' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>{{ user.first_name }}'s Profile (Admin View)</h2>
+
+    <!-- Profile Information -->
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Profile Information</h4>
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" class="form-control" value="{{ user.first_name }}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" class="form-control" value="{{ user.last_name }}" readonly>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" value="{{ user.email }}" readonly>
+            </div>
+        </div>
+    </div>
+
+    <!-- Joined Events Tables -->
+    <div class="row mt-5">
+        <!-- Project Wednesday -->
+        <div class="col-md-12">
+            <h4>Project Wednesday</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if event %}
+                    <tr>
+                        <td>{{ user.joined_events.get("Project Wednesday") }}</td>
+                        <td>
+                            <a href="{{ url_for('display_pw', event_id=event.id) }}" class="btn btn-primary">View Event</a>
+                            <form action="{{ url_for('admin_leave_event') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <input type="hidden" name="event_id" value="{{ event.id }}">
+                                <input type="hidden" name="event_type" value="Project Wednesday">
+                                <button type="submit" class="btn btn-danger">Leave Event</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No joined events</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tournaments (Spectating) -->
+        <div class="col-md-12 mt-3">
+            <h4>Tournaments (Spectating)</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if tournaments_s %}
+                    {% for tournament_s in tournaments_s %}
+                    <tr>
+                        <td>{{ tournament_s.name }}</td>
+                        <td>
+                            <a href="{{ url_for('display_tournaments', event_id=tournament_s.id) }}" class="btn btn-primary">View Event</a>
+                            <form action="{{ url_for('admin_leave_event') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <input type="hidden" name="event_id" value="{{ tournament_s.id }}">
+                                <input type="hidden" name="event_type" value="Tournaments Spectating">
+                                <button type="submit" class="btn btn-danger">Leave Event</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No spectating tournaments</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tournaments (Competing) -->
+        <div class="col-md-12 mt-3">
+            <h4>Tournaments (Competing)</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if tournaments_c %}
+                    {% for tournament_c in tournaments_c %}
+                    <tr>
+                        <td>{{ tournament_c.name }}</td>
+                        <td>
+                            <a href="{{ url_for('display_tournaments', event_id=tournament_c.id) }}" class="btn btn-primary">View Event</a>
+                            <form action="{{ url_for('admin_leave_event') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <input type="hidden" name="event_id" value="{{ tournament_c.id }}">
+                                <input type="hidden" name="event_type" value="Tournaments Competing">
+                                <button type="submit" class="btn btn-danger">Leave Event</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No competing tournaments</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Performances -->
+        <div class="col-md-12 mt-3">
+            <h4>Performances</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Event Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if performances %}
+                    {% for performance in performances %}
+                    <tr>
+                        <td>{{ performance.name }}</td>
+                        <td>
+                            <a href="{{ url_for('display_performances', event_id=performance.id) }}" class="btn btn-primary">View Event</a>
+                            <form action="{{ url_for('admin_leave_event') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <input type="hidden" name="event_id" value="{{ performance.id }}">
+                                <input type="hidden" name="event_type" value="Performances">
+                                <button type="submit" class="btn btn-danger">Leave Event</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="2">No performances</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block main_css %}
+<link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet">
+{% endblock %}

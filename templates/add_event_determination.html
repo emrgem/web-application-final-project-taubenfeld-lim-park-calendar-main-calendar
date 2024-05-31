@@ -1,0 +1,47 @@
+{%extends "base.html"%}
+{%block title%} ADD EVENTS {%endblock%}
+{%set active_page='events'%}
+{%block content%} 
+
+<div class="container container-determine-event" style="justify-content:center;">
+    <h1 class="display-4" style="align-items:center; margin-top:100px;"> Choose type of event to add.. </h1>
+    <div class="row" style='margin-top:100px;'>
+       
+        <div class="col-4">
+            <a href="/add/project_wednesdays">
+                <div class="card" style="height:300px; align-items:center;">
+                    <!-- <div class="card-img-top event-img" style="background-image: url('static/assets/img/bt logo.png'); height: 40%; background-size: cover; background-position: center;"></div> -->
+                    <img class='event-determination-img' src="static/assets/img/pw_icon.png" alt="IMG"> 
+                    <h1 class="event-title"> Project Wednesdays </h1>
+                </div>
+            </a>
+       </div>
+
+        <div class="col-4">
+            <a href="/add/tournaments">
+                <div class="card" style="height:300px; align-items:center;">
+                    <!-- <div class="card-img-top event-img" style="background-image: url('static/assets/img/bt logo.png'); height: 40%; background-size: cover; background-position: center;"></div> -->
+                    <img class='event-determination-img' src="static/assets/img/tournament_icon.png" alt="IMG"> 
+                    <h1 class="event-title"> Tournaments </h1>
+                </div>
+            </a>
+       </div>
+        
+        
+        <div class="col-4">
+            <a href="/add/performances">
+                <div class="card" style="height:300px; align-items:center;">
+                    <!-- <div class="card-img-top event-img" style="background-image: url('static/assets/img/bt logo.png'); height: 40%; background-size: cover; background-position: center;"></div> -->
+                    <img class='event-determination-img' src="static/assets/img/performance_icon.png" alt="IMG"> 
+                    <h1 class="event-title"> Concerts/Performances </h1>
+                </div>
+            </a>
+       </div>
+        
+    </div>
+</div>
+
+{%endblock%}
+{%block main_css%}<link href="static/assets/css/style.css" rel="stylesheet">{%endblock%}
+
+<!-- peepeepoopoo -->
